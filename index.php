@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+
+<?php 
+	
+	include( "functions/functions.php" );
+
+?>
+
 <html lang="">
 	<head>
 		<meta charset="utf-8">
@@ -74,9 +81,9 @@
 								</div>
 							</div>
 							<div class="form-group">
-								<label for="u_password" class="col-sm-2">Password:</label>
+								<label for="u_pass" class="col-sm-2">Password:</label>
 								<div class="col-sm-10">
-									<input type="password" class="form-control" name="u_password" placeholder="Enter your password" required>
+									<input type="password" class="form-control" name="u_pass" placeholder="Enter your password" required>
 								</div>
 							</div>
 							<div class="form-group">
@@ -88,22 +95,22 @@
 							<div class="form-group">
 								<label for="u_country" class="col-sm-2">Country:</label>
 								<div class="col-sm-10">
-									<select class="form-control">
+									<select name="u_country" class="form-control">
 									  <option>Select a Country</option>
-									  <option>Australia</option>
-									  <option>Bangladesh</option>
-									  <option>United States</option>
-									  <option>United Kingdom</option>
+									  <option value="Australia">Australia</option>
+									  <option value="Bangladesh">Bangladesh</option>
+									  <option value="United States">United States</option>
+									  <option value="United Kingdom">United Kingdom</option>
 									</select>
 								</div>
 							</div>
 							<div class="form-group">
 								<label for="u_gender" class="col-sm-2">Gender:</label>
 								<div class="col-sm-10">
-									<select class="form-control">
+									<select name="u_gender" class="form-control">
 									  <option>Select a Gender</option>
-									  <option>Male</option>
-									  <option>Female</option>
+									  <option value="Male">Male</option>
+									  <option value="Female">Female</option>
 									</select>
 								</div>
 							</div>
@@ -115,10 +122,12 @@
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
-									<button type="submit" name="u_submit" class="btn btn-default">Sign Up</button>
+									<button type="submit" name="sign_up" class="btn btn-default">Sign Up</button>
 								</div>
 							</div>
 						</form>
+
+						<?php InsertUser(); ?>
 
 					</div>
 				</div>
