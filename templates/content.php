@@ -6,7 +6,7 @@
 						<img src="assets/images/1.png" class="img-responsive inline-block" alt="">
 					</div>
 					<div class="col-sm-5">
-						<form method="post" class="form-horizontal">
+						<form method="post" class="user-registration-form form-horizontal">
 							<div class="form-group">
 								<div class="col-sm-offset-2 col-sm-10">
 									<h3 class="text-center">Sign Up Here</h3>
