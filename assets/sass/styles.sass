@@ -14,3 +14,24 @@
 .list-group-item:first-child
 	border-top-right-radius: 0
 	border-top-left-radius: 0
+
+.single-comment .panel>.panel-heading
+	position: relative
+	
+.single-comment .panel>.panel-heading:after, 
+.single-comment .panel>.panel-heading:before
+	position: absolute
+	top: 11px
+	left: -16px
+	right: 100%
+	width: 0
+	height: 0
+	display: block
+	content: " "
+	border-color: transparent
+	border-style: solid solid outset
+	pointer-events: none
+
+.single-comment .panel>.panel-heading:before
+	border-right-color: #ddd
+	border-width: 8px
