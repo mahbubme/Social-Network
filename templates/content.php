@@ -1,4 +1,4 @@
-		<section id="content">
+		<section id="content" class="registration-page" >
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-7 text-center">
