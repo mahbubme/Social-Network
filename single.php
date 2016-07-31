@@ -72,7 +72,7 @@
 												$topic_id = $row['topic_id'];
 												$topic_title = $row['topic_title'];
 
-					            				echo "<li><a href='home.php?topic=$topic_id'>$topic_title</a></li>";
+					            				echo "<li><a href='topic.php?topic=$topic_id'>$topic_title</a></li>";
 
 											}
 

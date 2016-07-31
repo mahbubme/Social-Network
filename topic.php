@@ -148,8 +148,23 @@
 						</form>
 						<?php insertPost(); ?>
 						<div id="posts">
-							<h3>Most recent discussions.</h3>
-							<?php get_posts(); ?>
+							<?php 
+
+								if ( isset( $_GET['topic'] ) ) {
+
+									$topic_id = $_GET['topic'];
+
+									$query = "SELECT * from topics where topic_id='$topic_id'";
+									$run_query = mysqli_query( $connection, $query );
+									$row = mysqli_fetch_array( $run_query );
+
+									$topic_name = $row['topic_title'];
+
+								}
+
+							?>
+							<h3>All post in '<?php echo $topic_name; ?>' category.</h3>
+							<?php get_cats(); ?>
 						</div>
 					</div>
 				</div>
