@@ -99,6 +99,10 @@
 
 							$user_id 	    = $row['user_id'];
 							$user_name 		= $row['user_name'];
+							$user_pass		= $row['user_pass'];
+							$user_email		= $row['user_email'];
+							$user_gender	= $row['user_gender'];
+							$user_birthday	= $row['user_b_day'];
 							$user_country 	= $row['user_country'];
 							$user_image 	= $row['user_image'];
 							$register_date  = $row['register_date'];
@@ -120,37 +124,86 @@
 
 					</div>
 					<div class="col-sm-9">
-						<form action="home.php?id=<?php echo $user_id; ?>" method="post" class="form-horizontal">
-							<h2>What's your question today? let's discuss!</h2>
+						<h2>Edit Your Profile:</h2><br>
+						<form method="post" class="user-registration-form form-horizontal" enctype="multipart/form-data">
 							<div class="form-group">
-								<div class="col-sm-12">
-									<input type="text" name="title" class="form-control" placeholder="Write a Title" required>
+								<label for="u_name" class="col-sm-2">Name:</label>
+								<div class="col-sm-10">
+									<input type="text" class="form-control" name="u_name" value="<?php echo $user_name; ?>" required>
 								</div>
 							</div>
 							<div class="form-group">
-								<div class="col-sm-12">
-									<textarea name="content" class="form-control" cols="30" rows="10" placeholder="Write description..." required></textarea>
+								<label for="u_pass" class="col-sm-2">Password:</label>
+								<div class="col-sm-10">
+									<input type="password" class="form-control" name="u_pass" value="<?php echo $user_pass; ?>" required>
 								</div>
 							</div>
 							<div class="form-group">
-								<div class="col-sm-12">
-									<select name="topic" class="form-control">
-										<option value="">Select a topic</option>
-										<?php getTopics(); ?>
+								<label for="u_email" class="col-sm-2">Email:</label>
+								<div class="col-sm-10">
+									<input type="email" class="form-control" name="u_email" value="<?php echo $user_email; ?>" disabled="disabled">
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="u_country" class="col-sm-2">Country:</label>
+								<div class="col-sm-10">
+									<select name="u_country" class="form-control"  disabled="disabled">
+									  <option><?php echo $user_country; ?></option>
+									  <option value="Australia">Australia</option>
+									  <option value="Bangladesh">Bangladesh</option>
+									  <option value="United States">United States</option>
+									  <option value="United Kingdom">United Kingdom</option>
 									</select>
 								</div>
 							</div>
 							<div class="form-group">
-								<div class="col-sm-12">
-									<input type="submit" name="sub" class="btn btn-success pull-right" value="Post to Timeline">
+								<label for="u_gender" class="col-sm-2">Gender:</label>
+								<div class="col-sm-10">
+									<select name="u_gender" class="form-control" disabled="disabled">
+									  <option><?php echo $user_gender; ?></option>
+									  <option value="Male">Male</option>
+									  <option value="Female">Female</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="u_image" class="col-sm-2">Photo:</label>
+								<div class="col-sm-10">
+									<input type="file" class="form-control" name="u_image" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-offset-2 col-sm-10">
+									<button type="submit" name="update" class="btn btn-default btn-success">Update</button>
 								</div>
 							</div>
 						</form>
-						<?php insertPost(); ?>
-						<div id="posts">
-							<h3>Most recent discussions.</h3>
-							<?php get_posts(); ?>
-						</div>
+
+						<?php 
+
+							if ( isset( $_POST['update'] ) ) {
+
+								$name = $_POST['u_name'];
+								$u_pass = $_POST['u_pass'];
+								//$u_email = $_POST['u_email'];
+								$u_image = $_FILES['u_image']['name'];
+								$image_tmp = $_FILES['u_image']['tmp_name'];
+
+								move_uploaded_file( $image_tmp, "user/user_images/$u_image" );
+
+								$update = "UPDATE users set user_name='$name',user_pass='$u_pass',user_image='$u_image' where user_id='$user_id'";
+								$run = mysqli_query( $connection, $update );
+
+								if ( $run ) {
+
+									echo "<script>alert('Your Profile Updated!')</script>";
+									echo "<script>window.open( 'home.php', '_self' )</script>";
+
+								}
+
+							}
+
+						?>
 					</div>
 				</div>
 			</div>
