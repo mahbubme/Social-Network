@@ -63,7 +63,7 @@ function get_posts() {
 
 	global $connection;
 
-	$per_page = 3;
+	$per_page = 5;
 
 	if ( isset( $_GET['page'] ) ) {
 		$page = $_GET['page'];
@@ -313,6 +313,63 @@ function GetResults() {
 		$output  .= "<h3>$post_title</h3>";
 		$output  .= "<p>$content</p>";
 		$output  .= "<a href='single.php?post_id=$post_id' class='btn btn-success'>See Replies or Reply to This</a>";
+		$output  .= "</div>";
+		$output  .= "</div>";
+		$output  .= "</div>";
+
+		echo $output;
+
+	}
+
+}
+
+
+// function for displaying individual user posts 
+function user_posts() {
+
+	global $connection;
+
+	if ( isset( $_GET['u_id'] ) ) {
+		$u_id = $_GET['u_id'];
+	}
+
+	$get_posts  = "SELECT * from posts where user_id='$u_id' ORDER by 1 DESC";
+	$run_posts  = mysqli_query( $connection, $get_posts );
+
+	while ( $row_posts = mysqli_fetch_array( $run_posts ) ) {
+		
+		$post_id = $row_posts['post_id'];
+		$user_id = $row_posts['user_id'];
+		$post_title = $row_posts['post_title'];
+		$content = $row_posts['post_content'];
+		$post_date = $row_posts['post_date'];
+
+		// getting the user who has posted the thread
+		$user = "SELECT * from users where user_id='$user_id' AND posts='yes'";
+
+		$run_user = mysqli_query( $connection, $user );
+		$row_user = mysqli_fetch_array( $run_user );
+		$user_name = $row_user['user_name'];
+		$user_image = $row_user['user_image'];
+
+		// now displaying all at once
+		$output   = "<div class='panel panel-default'>";
+		$output  .= "<div class='panel-body'>";
+		$output  .= "<div class='col-sm-2'>";
+		$output  .= "<img src='user/user_images/$user_image' class='img-responsive'>";
+		$output  .= "</div>";
+		$output  .= "<div class='col-sm-10'>";
+		$output  .= "<ol class='breadcrumb'>";
+		$output  .= "<li><a href='user_profile.php?user_id=$user_id'>$user_name</a></li>";
+		$output  .= "<li>$post_date</li>";
+		$output  .= "</ol>";
+		$output  .= "<h3>$post_title</h3>";
+		$output  .= "<p>$content</p>";
+		$output  .= "<div class='btn-group'>";
+		$output  .= "<a href='single.php?post_id=$post_id' class='btn btn-success'>View</a>";
+		$output  .= "<a href='edit_post.php?post_id=$post_id' class='btn btn-info'>Edit</a>";
+		$output  .= "<a href='functions/delete_post.php?post_id=$post_id' class='btn btn-danger'>Delete</a>";
+		$output  .= "</div>";
 		$output  .= "</div>";
 		$output  .= "</div>";
 		$output  .= "</div>";
