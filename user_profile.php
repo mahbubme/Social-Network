@@ -104,6 +104,10 @@
 							$register_date  = $row['register_date'];
 							$last_login 	= $row['last_login'];
 
+							$user_posts = "SELECT  * from posts where user_id='$user_id'";
+							$run_posts = mysqli_query( $connection, $user_posts );
+							$posts = mysqli_num_rows( $run_posts );
+
 						?>
 
 						<img src="user/user_images/<?php echo $user_image; ?>" class="img-responsive" alt="">
@@ -112,17 +116,15 @@
 							<li class="list-group-item">Country: <?php echo $user_country; ?></li>
 							<li class="list-group-item">Last Login: <?php echo $last_login; ?></li>
 							<li class="list-group-item">Member Since: <?php echo $register_date; ?></li>
-							<li class="list-group-item"><a href="my_messages.php">Messages</a></li>
-							<li class="list-group-item"><a href="my_posts.php?u_id=<?php echo $user_id; ?>">My Posts</a></li>
-							<li class="list-group-item"><a href="edit_profile.php">Edit My Account</a></li>
+							<li class="list-group-item"><a href="my_messages.php?u_id=<?php echo $user_id; ?>">Messages ()</a></li>
+							<li class="list-group-item"><a href="my_posts.php?u_id=<?php echo $user_id; ?>">My Posts (<?php echo $posts; ?>)</a></li>
+							<li class="list-group-item"><a href="edit_profile.php?u_id=<?php echo $user_id; ?>">Edit My Account</a></li>
 							<li class="list-group-item"><a href="logout.php">Logout</a></li>
 						</ul>
 
 					</div>
 					<div class="col-sm-9">
-						<div id="posts">
-							<?php single_post(); ?>
-						</div>
+						<?php user_profile(); ?>
 					</div>
 				</div>
 			</div>

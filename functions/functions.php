@@ -99,7 +99,7 @@ function get_posts() {
 		$output  .= "</div>";
 		$output  .= "<div class='col-sm-10'>";
 		$output  .= "<ol class='breadcrumb'>";
-		$output  .= "<li><a href='user_profile.php?user_id=$user_id'>$user_name</a></li>";
+		$output  .= "<li><a href='user_profile.php?u_id=$user_id'>$user_name</a></li>";
 		$output  .= "<li>$post_date</li>";
 		$output  .= "</ol>";
 		$output  .= "<h3>$post_title</h3>";
@@ -153,7 +153,7 @@ function single_post() {
 		$output  .= "</div>";
 		$output  .= "<div class='col-sm-10'>";
 		$output  .= "<ol class='breadcrumb'>";
-		$output  .= "<li><a href='user_profile.php?user_id=$user_id'>$user_name</a></li>";
+		$output  .= "<li><a href='user_profile.php?u_id=$user_id'>$user_name</a></li>";
 		$output  .= "<li>$post_date</li>";
 		$output  .= "</ol>";
 		$output  .= "<h3>$post_title</h3>";
@@ -360,7 +360,7 @@ function user_posts() {
 		$output  .= "</div>";
 		$output  .= "<div class='col-sm-10'>";
 		$output  .= "<ol class='breadcrumb'>";
-		$output  .= "<li><a href='user_profile.php?user_id=$user_id'>$user_name</a></li>";
+		$output  .= "<li><a href='user_profile.php?u_id=$user_id'>$user_name</a></li>";
 		$output  .= "<li>$post_date</li>";
 		$output  .= "</ol>";
 		$output  .= "<h3>$post_title</h3>";
@@ -377,6 +377,90 @@ function user_posts() {
 		echo $output;
 
 	}
+
+}
+
+
+function user_profile() {
+
+	if ( isset( $_GET['u_id'] ) ) {
+
+		global $connection;
+
+		$user_id = $_GET['u_id'];
+
+		$select = "SELECT * from users where user_id='$user_id'";
+		$run = mysqli_query( $connection, $select );
+		$row = mysqli_fetch_array( $run );
+
+		$id = $row['user_id'];
+		$image = $row['user_image'];
+		$name = $row['user_name'];
+		$country = $row['user_country'];
+		$gender = $row['user_gender'];
+		$last_login = $row['last_login'];
+		$register_date = $row['register_date'];
+
+		if ( $gender == 'Male' ) {
+			$msg = "Send him a message";
+		}else {
+			$msg = "Send her a message";
+		}
+
+		$output  = "";
+		$output .= "<div class='panel panel-primary'>";
+		$output .= "<div class='panel-heading'><strong>Info About This User:</strong></div>";
+		$output .= "<div class='panel-body'>";
+		$output .= "<div class='row'>";
+		$output .= "<div class='col-sm-8'>";
+		$output .= "<ul class='user-details'>";
+		$output .= "<li><span>Name: </span>$name</li>";
+		$output .= "<li><span>Gender: </span>$gender</li>";
+		$output .= "<li><span>Country: </span>$country</li>";
+		$output .= "<li><span>Last Login: </span>$last_login</li>";
+		$output .= "<li><span>Member Since: </span>$register_date</li>";
+		$output .= "</ul>";
+		$output .= "<a href='messages.php?u_id=$id' class='btn btn-success'>$msg</a>";
+		$output .= "</div>";
+		$output .= "<div class='col-sm-4'>";
+		$output .= "<img src='user/user_images/$image' class='img-responsive'>";
+		$output .= "</div>";
+		$output .= "</div>";
+		$output .= "</div>";
+		$output .= "</div>";
+
+		echo $output;
+
+	}
+
+	new_members();
+
+}
+
+function new_members() {
+
+	global $connection;
+
+	// select new members
+	$user = "SELECT * from users LIMIT 0,20";
+	$run_user = mysqli_query( $connection, $user );
+
+	$output  = "<h2>New members on this site:</h2>";
+	$output .= "<ul class='new-members'>";
+
+	while ( $row = mysqli_fetch_array( $run_user ) ) {
+
+		$user_id = $row['user_id'];
+		$user_name = $row['user_name'];
+		$user_image = $row['user_image'];
+
+		$output .= "<li><a href='user_profile.php?u_id=$user_id'><img src='user/user_images/$user_image' ></a></li>";
+
+	}
+
+	$output .= "</ul>";
+
+	echo $output;
 
 }
 

@@ -38,4 +38,36 @@
 .user-thumb {
   margin-bottom: 20px; }
 
+.user-thumb img.img-responsive {
+  max-height: 77.5px; }
+
+.new-members,
+.user-details {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  margin-bottom: 40px; }
+
+.user-details li {
+  margin: 10px 0;
+  font-size: 16px; }
+
+.user-details li span {
+  width: 180px;
+  font-weight: 700;
+  display: inline-block; }
+
+.new-members {
+  margin-left: -5px;
+  margin-right: -5px; }
+
+.new-members li {
+  display: inline-block;
+  float: left;
+  padding: 0 5px 20px 5px; }
+
+.new-members li a img {
+  width: 70px;
+  height: 70px; }
+
 /*# sourceMappingURL=main.css.map */
