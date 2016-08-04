@@ -140,7 +140,7 @@
 								<tbody>
 									<?php 
 
-										$sel_msg = "SELECT * from messages where receiver='$user_id' AND status='unread'";
+										$sel_msg = "SELECT * from messages where receiver='$user_id' AND status='unread' order by 1 DESC";
 										$run_msg = mysqli_query( $connection, $sel_msg );
 
 										$count_msg = mysqli_num_rows( $run_msg );
@@ -174,6 +174,31 @@
 									?>
 								</tbody>
 							</table>
+
+							<?php 
+
+								if ( isset( $_GET['msg_id'] ) ) {
+
+									$get_id = $_GET['msg_id'];
+
+									$select_msg = "SELECT * from messages where msg_id='$get_id'";
+									$run_message = mysqli_query( $connection, $select_msg );
+
+									$row_message = mysqli_fetch_array( $run_message );
+
+									$msg_subject = $row_message['msg_sub'];
+									$msg_topic = $row_message['msg_topic'];
+
+									$output   = "<div class='well'>";
+									$output  .= "<h3>$msg_subject</h3>";
+									$output  .= "<p>$msg_topic</p>";
+									$output  .= "</div>";
+
+									echo $output;
+
+								}
+
+							?>
 						</div>
 					</div>
 				</div>
