@@ -175,28 +175,71 @@
 								</tbody>
 							</table>
 
-							<?php 
+							<?php
+
+								$alert = '';
+
+								if ( isset( $_POST['submit_msg'] ) ) {
+
+									$user_reply = $_POST['msg_reply'];
+
+									$get_id = $_GET['msg_id'];
+									
+									$select_msg = "SELECT * from messages where msg_id='$get_id'";
+									$run_message = mysqli_query( $connection, $select_msg );
+
+									$row = mysqli_fetch_array( $run_message );
+
+									$reply_content = $row['reply'];
+
+									if ( $reply_content != 'no_reply' ) {
+
+										$alert .= "<div class='alert alert-info' role='alert'>This message was already replied!</div>";
+
+									}else {
+
+										$update_msg = "UPDATE messages set reply='$user_reply' where msg_id='$get_id'";
+										$run_update = mysqli_query( $connection, $update_msg );
+
+										$alert .= "<div class='alert alert-success' role='alert'>Message was replied!</div>";
+
+									}
+
+								}
 
 								if ( isset( $_GET['msg_id'] ) ) {
 
 									$get_id = $_GET['msg_id'];
-
+									
 									$select_msg = "SELECT * from messages where msg_id='$get_id'";
 									$run_message = mysqli_query( $connection, $select_msg );
 
 									$row_message = mysqli_fetch_array( $run_message );
 
+									$reply_content = $row_message['reply'];
+
 									$msg_subject = $row_message['msg_sub'];
 									$msg_topic = $row_message['msg_topic'];
 
-									$output   = "<div class='well'>";
-									$output  .= "<h3>$msg_subject</h3>";
-									$output  .= "<p>$msg_topic</p>";
+									$output   = "<div class='well clearfix'>";
+									$output  .= "<h3>Title: $msg_subject</h3>";
+									$output  .= "<p><strong>Message: </strong> $msg_topic</p><br>";
+									$output  .= "<div class='reply-to-message'>";
+									$output  .= "<h4>My Reply: </h4>";
+									$output  .= "<p>$reply_content</p>";
+									$output  .= "<form action='my_messages.php?msg_id=$get_id' method='POST' class='form-horizontal'>";
+									$output  .= "<textarea name='msg_reply' class='form-control' rows='10' placeholder='Reply to this message...' required></textarea><br>";
+									$output  .= "<input type='submit' name='submit_msg' class='btn btn-success pull-right' value='Reply to This Message'>";
+									$output  .= "</form>";	
 									$output  .= "</div>";
+									$output  .= "</div>";
+									$output  .= "$alert";
 
 									echo $output;
-
+								
 								}
+
+								
 
 							?>
 						</div>
