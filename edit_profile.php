@@ -108,6 +108,12 @@
 							$register_date  = $row['register_date'];
 							$last_login 	= $row['last_login'];
 
+							// getting the number of unread messages
+							$sel_msg = "SELECT * from messages where receiver='$user_id' AND status='unread' order by 1 DESC";
+							$run_msg = mysqli_query( $connection, $sel_msg );
+
+							$count_msg = mysqli_num_rows( $run_msg );
+
 						?>
 
 						<img src="user/user_images/<?php echo $user_image; ?>" class="img-responsive" alt="">
@@ -116,7 +122,7 @@
 							<li class="list-group-item">Country: <?php echo $user_country; ?></li>
 							<li class="list-group-item">Last Login: <?php echo $last_login; ?></li>
 							<li class="list-group-item">Member Since: <?php echo $register_date; ?></li>
-							<li class="list-group-item"><a href="my_messages.php?u_id=<?php echo $user_id; ?>">Messages (2)</a></li>
+							<li class="list-group-item"><a href="my_messages.php?inbox&u_id=<?php echo $user_id; ?>">Messages (<?php echo $count_msg; ?>)</a></li>
 							<li class="list-group-item"><a href="my_posts.php?u_id=<?php echo $user_id; ?>">My Posts (3)</a></li>
 							<li class="list-group-item"><a href="edit_profile.php?u_id=<?php echo $user_id; ?>">Edit My Account</a></li>
 							<li class="list-group-item"><a href="logout.php">Logout</a></li>

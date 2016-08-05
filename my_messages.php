@@ -108,6 +108,12 @@
 							$run_posts = mysqli_query( $connection, $user_posts );
 							$posts = mysqli_num_rows( $run_posts );
 
+							// getting the number of unread messages
+							$sel_msg = "SELECT * from messages where receiver='$user_id' AND status='unread' order by 1 DESC";
+							$run_msg = mysqli_query( $connection, $sel_msg );
+
+							$count_msg = mysqli_num_rows( $run_msg );
+
 						?>
 
 						<img src="user/user_images/<?php echo $user_image; ?>" class="img-responsive" alt="">
@@ -116,7 +122,7 @@
 							<li class="list-group-item">Country: <?php echo $user_country; ?></li>
 							<li class="list-group-item">Last Login: <?php echo $last_login; ?></li>
 							<li class="list-group-item">Member Since: <?php echo $register_date; ?></li>
-							<li class="list-group-item"><a href="my_messages.php?u_id=<?php echo $user_id; ?>">Messages ()</a></li>
+							<li class="list-group-item"><a href="my_messages.php?inbox&u_id=<?php echo $user_id; ?>">Messages (<?php echo $count_msg; ?>)</a></li>
 							<li class="list-group-item"><a href="my_posts.php?u_id=<?php echo $user_id; ?>">My Posts (<?php echo $posts; ?>)</a></li>
 							<li class="list-group-item"><a href="edit_profile.php?u_id=<?php echo $user_id; ?>">Edit My Account</a></li>
 							<li class="list-group-item"><a href="logout.php">Logout</a></li>
@@ -126,54 +132,74 @@
 					<div class="col-sm-9">
 						<h2>See your messages:</h2>
 
-						<div class="table-responsive">
-							<table class="table">
+						<div class="clearfix btn-group text-center">
+							<a href="my_messages.php?inbox&u_id=<?php echo $user_id; ?>" class="btn btn-success">My Inbox</a>
+							<a href="my_messages.php?sent&u_id=<?php echo $user_id; ?>" class="btn btn-primary">Sent Items</a>
+						</div>
+						<?php
+							if ( isset( $_GET['sent'] ) ) {
 
-								<thead>
-									<tr>
-										<th>Sender</th>
-										<th>Subject</th>
-										<th>Date</th>
-										<th>Reply</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php 
+								include( "sent.php" );
 
-										$sel_msg = "SELECT * from messages where receiver='$user_id' AND status='unread' order by 1 DESC";
-										$run_msg = mysqli_query( $connection, $sel_msg );
+							} 
+						?>
 
-										$count_msg = mysqli_num_rows( $run_msg );
+						<?php if ( isset( $_GET['inbox'] ) ) {?>
+							<div class="table-responsive">
+								<table class="table">
 
-										while ( $row_msg = mysqli_fetch_array( $run_msg ) ) {
+									<thead>
+										<tr>
+											<th>Sender</th>
+											<th>Subject</th>
+											<th>Date</th>
+											<th>Reply</th>
+										</tr>
+									</thead>
+									<tbody>
+										<?php 
 
-											$msg_id = $row_msg['msg_id'];
-											$msg_receiver = $row_msg['receiver'];
-											$msg_sender = $row_msg['sender'];
-											$msg_sub = $row_msg['msg_sub'];
-											$msg_topic = $row_msg['msg_topic'];
-											$msg_date = $row_msg['msg_date'];
+											$sel_msg = "SELECT * from messages where receiver='$user_id' order by 1 DESC";
+											$run_msg = mysqli_query( $connection, $sel_msg );
 
-											$get_sender = "SELECT * from users where user_id='$msg_sender'";
-											$run_sender = mysqli_query( $connection, $get_sender );
-											$row = mysqli_fetch_array( $run_sender );
+											$count_msg = mysqli_num_rows( $run_msg );
 
-											$sender_name = $row['user_name'];
+											while ( $row_msg = mysqli_fetch_array( $run_msg ) ) {
 
-											$output = "<tr class='active'>";
-											$output .= "<td><a href='user_profile.php?u_id=$msg_sender'>$sender_name</a></td>";
-											$output .= "<td><a href='my_messages.php?msg_id=$msg_id'>$msg_sub</a></td>";
-											$output .= "<td>$msg_date</td>";
-											$output .= "<td><a href='my_messages.php?msg_id=$msg_id'>Reply</a></td>";
-											$output .= "</tr>";
+												$msg_id = $row_msg['msg_id'];
+												$msg_receiver = $row_msg['receiver'];
+												$msg_sender = $row_msg['sender'];
+												$msg_sub = $row_msg['msg_sub'];
+												$msg_topic = $row_msg['msg_topic'];
+												$msg_date = $row_msg['msg_date'];
+												$msg_status = $row_msg['status'];
 
-											echo $output; 
+												$get_sender = "SELECT * from users where user_id='$msg_sender'";
+												$run_sender = mysqli_query( $connection, $get_sender );
+												$row = mysqli_fetch_array( $run_sender );
 
-										}
+												$sender_name = $row['user_name'];
 
-									?>
-								</tbody>
-							</table>
+												if ( $msg_status == 'unread' ) {
+													$output = "<tr class='success'>";
+												}else {
+													$output = "<tr class='active'>";
+												}
+
+												$output .= "<td><a href='user_profile.php?u_id=$msg_sender'>$sender_name</a></td>";
+												$output .= "<td><a href='my_messages.php?msg_id=$msg_id'>$msg_sub</a></td>";
+												$output .= "<td>$msg_date</td>";
+												$output .= "<td><a href='my_messages.php?msg_id=$msg_id'>Reply</a></td>";
+												$output .= "</tr>";
+
+												echo $output; 
+
+											}
+
+										?>
+									</tbody>
+								</table>
+							<?php } ?>
 
 							<?php
 
@@ -216,23 +242,26 @@
 
 									$row_message = mysqli_fetch_array( $run_message );
 
-									$reply_content = $row_message['reply'];
-
 									$msg_subject = $row_message['msg_sub'];
 									$msg_topic = $row_message['msg_topic'];
+									$reply_content = $row_message['reply'];
+
+									// updating the unread message to read
+									$update_unread = "UPDATE messages set status='read' where msg_id='$get_id'";
+									$run_unread = mysqli_query( $connection, $update_unread );
 
 									$output   = "<div class='well clearfix'>";
-									$output  .= "<h3>Title: $msg_subject</h3>";
+									$output  .= "<h4>Subject: $msg_subject</h4>";
 									$output  .= "<p><strong>Message: </strong> $msg_topic</p><br>";
 									$output  .= "<div class='reply-to-message'>";
 									$output  .= "<h4>My Reply: </h4>";
-									$output  .= "<p>$reply_content</p>";
+									$output  .= "<p><strong>Message: </strong>$reply_content</p>";
 									$output  .= "<form action='my_messages.php?msg_id=$get_id' method='POST' class='form-horizontal'>";
 									$output  .= "<textarea name='msg_reply' class='form-control' rows='10' placeholder='Reply to this message...' required></textarea><br>";
 									$output  .= "<input type='submit' name='submit_msg' class='btn btn-success pull-right' value='Reply to This Message'>";
-									$output  .= "</form>";	
+									$output  .= "</form>";	 
 									$output  .= "</div>";
-									$output  .= "</div>";
+									$output  .= "</div>";	
 									$output  .= "$alert";
 
 									echo $output;
