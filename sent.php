@@ -11,7 +11,7 @@
 		<tbody>
 			<?php 
 
-				$sel_msg = "SELECT * from messages where sender='$user_id' order by 1 DESC";
+				$sel_msg = "SELECT * from messages where sender='$user_id' AND msg_type='parent' order by 1 DESC";
 				$run_msg = mysqli_query( $connection, $sel_msg );
 
 				$count_msg = mysqli_num_rows( $run_msg );
