@@ -14,12 +14,6 @@
 
 	<?php 
 
-		if ( isset( $_GET['source'] ) ) {
-            $source = $_GET['source'];
-        }else {
-            $source = '';
-        }
-
         if ( isset( $_GET['page'] ) ) {
 			$page = $_GET['page'];
         }else {
@@ -34,7 +28,7 @@
         	default:
         			include "users.php";
         		break;
-        }
+        } 
 
 	?>
 
