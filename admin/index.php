@@ -29,6 +29,14 @@
                 include "posts.php";
             break;
 
+            case 'comments':
+                include "comments.php";
+            break;
+
+            case 'topics':
+                include "topics.php";
+            break;
+
         	default:
         		include "users.php";
         	break;
