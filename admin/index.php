@@ -22,12 +22,16 @@
 
         switch ( $page ) {
         	case 'users':
-        			include "users.php";
-        		break;
+        	   include "users.php";
+        	break;
         	
+            case 'posts':
+                include "posts.php";
+            break;
+
         	default:
-        			include "users.php";
-        		break;
+        		include "users.php";
+        	break;
         } 
 
 	?>

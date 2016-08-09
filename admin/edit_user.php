@@ -56,7 +56,7 @@
 
 ?>
 
-<div class="col-sm-8">
+<div class="col-sm-10">
 	<br><br>	
 	<form method="post" class="form-horizontal" enctype="multipart/form-data">
 		<div class="form-group">

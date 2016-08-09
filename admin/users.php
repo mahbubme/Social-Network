@@ -1,5 +1,4 @@
- 
-<div class="table-responsive">
+ <div class="table-responsive">
 	<table class="table">
 		<thead>
 			<tr>
