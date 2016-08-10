@@ -38,7 +38,7 @@
 						<li ><a href="index.php?page=posts">Posts<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-file"></span></a></li>
 						<li ><a href="index.php?page=comments">Comments<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-tasks"></span></a></li>
 						<li ><a href="index.php?page=topics">Topics<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-equalizer"></span></a></li>
-						<li ><a href="index.php?page=posts">Logout<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span></a></li>
+						<li ><a href="logout.php">Logout<span style="font-size:16px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-log-out"></span></a></li>
 					</ul> 
 				</div>
 			</div>

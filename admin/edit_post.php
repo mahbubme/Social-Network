@@ -5,8 +5,8 @@
 	include ( "../functions/functions.php" );
 
 
-	if ( !isset( $_SESSION['user_email'] ) ) {
-		header( "location: ../index.php" );
+	if ( !isset( $_SESSION['admin_email'] ) ) {
+		header( "location: login.php" );
 	}else {
 
 		include( "header.php" );
