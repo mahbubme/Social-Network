@@ -29,7 +29,7 @@ if ( isset( $_POST['sign_up'] ) ) {
 
 	} else {
 
-		$insert = "INSERT INTO users(user_name,user_pass,user_email,user_country,user_gender,user_b_day,user_image,register_date,last_login,status,posts) VALUES('{$name}','{$pass}','{$email}','{$country}','{$gender}','{$b_day}','default.jpg',NOW(),NOW(),'{$status}','{$posts}')";
+		$insert = "INSERT INTO users(user_name,user_pass,user_email,user_country,user_gender,user_b_day,user_image,register_date,last_login,status,posts,user_role) VALUES('{$name}','{$pass}','{$email}','{$country}','{$gender}','{$b_day}','default.jpg',NOW(),NOW(),'{$status}','{$posts}','subscriber')";
 		
 		$run_insert = mysqli_query( $connection, $insert );
 

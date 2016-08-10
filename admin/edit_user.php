@@ -38,6 +38,7 @@
 			$u_country = $_POST['u_country'];
 			$u_gender = $_POST['u_gender'];
 			$u_image = $_FILES['u_image']['name'];
+			$u_image = $user_id.$u_image;
 			$image_tmp = $_FILES['u_image']['tmp_name'];
 
 			move_uploaded_file( $image_tmp, "../user/user_images/$u_image" );

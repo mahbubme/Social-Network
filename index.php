@@ -4,10 +4,16 @@
 	
 	include( "includes/connection.php" );
 	include( "functions/functions.php" );
+
+	if ( isset( $_SESSION['user_email'] ) ) {
+		header( "location: home.php" );
+	}else {
 	
-	include( "templates/header.php" );
-	include( "templates/content.php" );
-	include( "templates/footer.php" );
-	include( "login.php" );
+		include( "header_login.php" );
+		include( "registration_form.php" );
+		include( "footer.php" );
+		include( "login.php" );
+
+	}
 
 ?>
