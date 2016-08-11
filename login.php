@@ -8,11 +8,23 @@
 		$get_user = "SELECT * FROM users WHERE user_email='$email' AND user_pass='$pass'";
 		$run_user = mysqli_query( $connection, $get_user );
 		$check = mysqli_num_rows( $run_user );
+		$user_data = mysqli_fetch_array( $run_user );
+
+		$status = $user_data['status'];
 
 		if ( $check == 1 ) {
 
-			$_SESSION['user_email'] = $email;
-			echo "<script>window.open('home.php','_self')</script>";
+			if ( $status == 'unverified') {
+
+				echo "<script>alert('Your email is not verified. Please check your email to verify.')</script>";
+				echo "<script>window.open('index.php','_self')</script>";
+
+			}else{
+			
+				$_SESSION['user_email'] = $email;
+				echo "<script>window.open('home.php','_self')</script>";
+
+			}
 
 		}else {
 
