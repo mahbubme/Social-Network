@@ -44,21 +44,14 @@ if ( isset( $_POST['sign_up'] ) ) {
 
 	}
 
-	$to = $email;
-	$subject = "Verify your email address";
-	$message = "
-	<html>
-		Hello <strong>$name</strong> You have just created an account, please verify your email address by clicking below link:
-		<a href='localhost/Social-Network/verify.php?code=$verification_code'>Click to Verify Your Email</a><br>
-		<strong>Thank you fro creating an account!</strong>
-	</html>
-	";
+	
+	$user_email = $email;
 
-	$headers  = "MIME-VERSION: 1.0" . "\r\n";
-	$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-	$headers .= "From: <admin@mail.com>" . "\r\n"; 
+	// change the following email according to your email address. the email user will receive the new user notification.
+	$admin_email = "mail@admin.com";
 
-	mail( $to, $subject, $message, $headers );
+	include( "templates/email/user_welcome_email.php" );
+	include( "templates/email/admin_email.php" );
 
 }
 
