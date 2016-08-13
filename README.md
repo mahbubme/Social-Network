@@ -2,7 +2,7 @@
 
 A simple social networking system that makes use of PHP ( learning project ) .
 
-[View Demo](http://mahbub.me/project/social-network/home.php)
+[View Demo](http://mahbub.me/project/social-network/)
 
 ## Deploying ( Heroku )
 
