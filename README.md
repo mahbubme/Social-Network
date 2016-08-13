@@ -35,18 +35,20 @@ Before running the application you have to follow the instructions given here:
 
 
 1) You need to add the database information in the following file
-	```sh
-	/includes/connection.php
-	```
+
+```sh
+/includes/connection.php
+```
 
 2) [Download](http://mahbub.me/project/social_network.sql.zip) the empty database file and import it to the database which you have created for this project.
 
 
 3) Change the default admin email by adding your email to get the notification about new user registration. File location is:
-	```sh
-	/user_insert.php 
-	line 51
-	```
+
+```sh
+/user_insert.php 
+line 51
+```
 
 4) You should change the site addres in the email templates, see the '/templates/email/' folder.
 
