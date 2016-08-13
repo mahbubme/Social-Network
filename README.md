@@ -50,7 +50,7 @@ Before running the application you have to follow the instructions given here:
 line 51
 ```
 
-4) You should change the site addres in the email templates, see the '/templates/email/' folder.
+4) You should change the site URL in the email templates, see the '/templates/email/' folder.
 
 
 5) To see the admin panel change a user_role to 'admin' from the database 'users' table. After the project link add '/admin'. It will prompt you to login as a admin by using the email and password who has the 'admin' user role.
