@@ -54,3 +54,7 @@ line 51
 
 
 5) To see the admin panel change a user_role to 'admin' from the database 'users' table. After the project link add '/admin'. It will prompt you to login as a admin by using the email and password who has the 'admin' user role.
+
+```sh
+http://example.com/admin/
+```
